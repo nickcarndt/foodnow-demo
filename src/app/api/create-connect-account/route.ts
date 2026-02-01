@@ -50,13 +50,16 @@ export async function POST(request: Request) {
       },
     });
 
-    const forwardedProto = request.headers.get('x-forwarded-proto');
+    // Derive base URL from request headers (works on Vercel and localhost)
+    // Priority: forwarded headers (Vercel) > host header > env var fallback
+    const forwardedProto = request.headers.get('x-forwarded-proto') || 'https';
     const forwardedHost = request.headers.get('x-forwarded-host');
     const host = request.headers.get('host');
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      (forwardedHost ? `${forwardedProto || 'https'}://${forwardedHost}` : null) ||
-      (host ? `http://${host}` : 'http://localhost:3000');
+    const baseUrl = forwardedHost
+      ? `${forwardedProto}://${forwardedHost}`
+      : host
+        ? `${host.includes('localhost') ? 'http' : 'https'}://${host}`
+        : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
     const accountLink = await stripe.accountLinks.create({
       account: account.id,

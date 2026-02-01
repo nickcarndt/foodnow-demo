@@ -11,8 +11,12 @@ import { setStoredAccounts } from '@/lib/demo-accounts-client';
 import { pushClientLog } from '@/lib/client-logs';
 import type { AccountType, CreateConnectAccountResponse } from '@/types';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-const isPublicUrl = baseUrl.startsWith('https://');
+// Helper to determine if we can use hosted onboarding (runtime check)
+function canUseHostedOnboarding(): boolean {
+  if (typeof window === 'undefined') return false;
+  const origin = window.location.origin;
+  return origin.startsWith('https://') && !origin.includes('localhost');
+}
 
 export default function OnboardingPage() {
   const [accountType, setAccountType] = useState<AccountType>('restaurant');
@@ -22,9 +26,15 @@ export default function OnboardingPage() {
   const [error, setError] = useState<string | null>(null);
   const [fallback, setFallback] = useState(false);
   const [demoAccountsReady, setDemoAccountsReady] = useState(false);
+  const [isPublicUrl, setIsPublicUrl] = useState(false);
 
   useEffect(() => {
-    if (!isPublicUrl) {
+    // Check at runtime if we're on a public HTTPS URL
+    const canHost = canUseHostedOnboarding();
+    setIsPublicUrl(canHost);
+    
+    // Pre-load demo accounts if not on public URL
+    if (!canHost) {
       setStoredAccounts(demoAccounts);
       setDemoAccountsReady(true);
     }
