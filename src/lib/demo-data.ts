@@ -84,10 +84,9 @@ export const headerNavItems: NavItem[] = [
 ];
 
 // Simplified demo pricing for interview clarity
-// All amounts in cents - totals reconcile exactly to $30.00
+// Single line item for maximum focus on money splits
 export const demoOrderItems: OrderItem[] = [
-  { id: 'item_pepperoni', name: "Mario's Pizza — Large Pepperoni", price: 2500 },
-  { id: 'item_delivery', name: 'Delivery Fee', price: 500 },
+  { id: 'item_order', name: "Mario's Pizza — Large Pepperoni (incl. delivery)", price: 3000 },
 ];
 
 export const demoOrderId = 'order_demo_001';
