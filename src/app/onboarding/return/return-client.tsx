@@ -83,7 +83,11 @@ export function ReturnClient() {
     fetchStatus();
   }, [accountId]);
 
-  const isActive =
+  // Primary gate: details_submitted determines if Express Dashboard is accessible
+  const canAccessExpressDashboard = status?.detailsSubmitted === true;
+  
+  // Full active status for badge display
+  const isFullyActive =
     status?.payoutsEnabled && status?.chargesEnabled && status?.detailsSubmitted;
 
   return (
@@ -103,8 +107,8 @@ export function ReturnClient() {
         <Card className="grid gap-4">
           <div className="flex items-center justify-between">
             <p className="text-base font-semibold text-gray-900">Account Details</p>
-            <Badge status={isActive ? 'success' : 'warning'}>
-              {isActive ? 'Active' : 'Pending'}
+            <Badge status={isFullyActive ? 'success' : 'warning'}>
+              {isFullyActive ? 'Active' : 'Pending'}
             </Badge>
           </div>
 
@@ -136,9 +140,15 @@ export function ReturnClient() {
                 <span className="font-medium text-gray-900">Express</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Status</span>
+                <span className="text-gray-500">Details Submitted</span>
                 <span className="font-medium text-gray-900">
-                  {isActive ? 'Active' : 'In review'}
+                  {status.detailsSubmitted ? 'Yes' : 'No'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Charges</span>
+                <span className="font-medium text-gray-900">
+                  {status.chargesEnabled ? 'Enabled' : 'Pending'}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -167,19 +177,25 @@ export function ReturnClient() {
               <Button 
                 onClick={handleOpenExpressDashboard} 
                 loading={isOpeningDashboard}
-                disabled={!isActive && !isLoading}
-                title={!isActive ? 'Account must complete onboarding first' : undefined}
+                disabled={!canAccessExpressDashboard && !isLoading}
               >
-                {isActive ? 'Open Express Dashboard (restaurant) →' : 'Express Dashboard (pending onboarding)'}
+                Open Express Dashboard (restaurant) →
               </Button>
             </>
           ) : null}
         </div>
 
         {accountId ? (
-          <p className="text-xs text-gray-500 text-center mt-4">
-            Platform admin links require Stripe dashboard login. Express Dashboard opens the connected account's portal.
-          </p>
+          <div className="text-center mt-4 space-y-2">
+            {!canAccessExpressDashboard && status ? (
+              <p className="text-xs text-amber-600">
+                Express Dashboard available after onboarding details are submitted.
+              </p>
+            ) : null}
+            <p className="text-xs text-gray-500">
+              Platform admin view requires Stripe Dashboard login. Express Dashboard opens a Stripe-hosted portal for the connected account (no separate credentials).
+            </p>
+          </div>
         ) : null}
       </main>
     </div>
