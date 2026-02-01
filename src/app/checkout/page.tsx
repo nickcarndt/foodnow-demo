@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
@@ -131,9 +132,9 @@ export default function CheckoutPage() {
       <Header />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <a href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
+        <Link href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
           ← Back to Dashboard
-        </a>
+        </Link>
 
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">Checkout</h1>

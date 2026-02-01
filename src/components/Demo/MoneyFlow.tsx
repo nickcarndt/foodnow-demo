@@ -32,7 +32,7 @@ export function MoneyFlow({
         <div className="text-center text-gray-400">↓</div>
         <div className="grid gap-2">
           <div className="flex items-center justify-between">
-            <span>Transfer to Mario's Pizza</span>
+            <span>Transfer to Mario&apos;s Pizza</span>
             <span className="font-medium text-gray-900">{formatCurrency(restaurantAmount)}</span>
           </div>
           <div className="flex items-center justify-between">

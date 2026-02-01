@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 import { DemoIndicator } from '@/components/Layout/DemoIndicator';
@@ -209,12 +210,12 @@ export function SuccessClient() {
         </Card>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-          <a href="/">
+          <Link href="/">
             <Button variant="secondary">Back to Dashboard</Button>
-          </a>
-          <a href="/checkout">
+          </Link>
+          <Link href="/checkout">
             <Button>New Order →</Button>
-          </a>
+          </Link>
         </div>
       </main>
     </div>

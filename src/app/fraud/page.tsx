@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Shield, Eye, Zap, Globe } from 'lucide-react';
 
 import { DemoIndicator } from '@/components/Layout/DemoIndicator';
@@ -99,9 +100,9 @@ export default function FraudPage() {
       <Header />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <a href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
+        <Link href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
           ← Back to Dashboard
-        </a>
+        </Link>
 
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">Radar Fraud Rules</h1>
@@ -173,7 +174,7 @@ export default function FraudPage() {
               ))}
               {visibleCount === 0 ? (
                 <div className="rounded-lg border border-dashed border-gray-200 p-6 text-center text-sm text-gray-500">
-                  Click "Run Simulation" to evaluate transactions.
+                  Click &quot;Run Simulation&quot; to evaluate transactions.
                 </div>
               ) : null}
             </div>

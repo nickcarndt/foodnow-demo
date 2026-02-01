@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { DemoIndicator } from '@/components/Layout/DemoIndicator';
 import { Header } from '@/components/Layout/Header';
@@ -92,9 +93,9 @@ export default function OnboardingPage() {
       <Header />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <a href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
+        <Link href="/" className="text-gray-500 hover:text-gray-700 mb-4 inline-block">
           ← Back to Dashboard
-        </a>
+        </Link>
 
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">
@@ -209,7 +210,7 @@ export default function OnboardingPage() {
             <ul className="text-sm text-gray-600 space-y-1">
               <li>We create a Stripe Express account</li>
               <li>You complete identity verification</li>
-              <li>You're ready to receive payouts</li>
+              <li>You&apos;re ready to receive payouts</li>
             </ul>
           </Card>
         </form>
