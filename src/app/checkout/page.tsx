@@ -139,7 +139,7 @@ export default function CheckoutPage() {
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">Checkout</h1>
           <p className="text-base text-gray-600 mt-2">
-            Process a customer payment with automatic splits to each party.
+            Process a customer payment. The platform then distributes funds to each party.
           </p>
           <p className="text-xs text-gray-500 mt-1">
             Stripe: Payments + Connect • Objects: PaymentIntent, Transfers
