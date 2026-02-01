@@ -164,8 +164,13 @@ export function ReturnClient() {
               >
                 <Button variant="secondary">View in Stripe (platform admin) →</Button>
               </a>
-              <Button onClick={handleOpenExpressDashboard} loading={isOpeningDashboard}>
-                Open Express Dashboard (restaurant) →
+              <Button 
+                onClick={handleOpenExpressDashboard} 
+                loading={isOpeningDashboard}
+                disabled={!isActive && !isLoading}
+                title={!isActive ? 'Account must complete onboarding first' : undefined}
+              >
+                {isActive ? 'Open Express Dashboard (restaurant) →' : 'Express Dashboard (pending onboarding)'}
               </Button>
             </>
           ) : null}

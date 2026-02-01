@@ -25,8 +25,19 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error('Create Express login link failed:', error);
+    
+    // Check if this is because the account isn't fully onboarded
+    const stripeError = error as { type?: string; message?: string };
+    const isNotOnboarded = stripeError.message?.includes('not yet fully onboarded') ||
+                           stripeError.message?.includes('login_link');
+    
     return NextResponse.json(
-      { success: false, message: 'Unable to create Express Dashboard link' },
+      { 
+        success: false, 
+        message: isNotOnboarded 
+          ? 'Account must complete onboarding before accessing Express Dashboard'
+          : 'Unable to create Express Dashboard link'
+      },
       { status: 500 },
     );
   }
