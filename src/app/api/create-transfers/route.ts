@@ -36,10 +36,18 @@ export async function POST(request: Request) {
       paymentIntentId: body.paymentIntentId,
     });
 
-    // Retrieve the PaymentIntent to get the charge ID for source_transaction
+    // Retrieve the PaymentIntent with expanded latest_charge for source_transaction
     // This links transfers to the specific charge that funded them (best practice)
-    const paymentIntent = await stripe.paymentIntents.retrieve(body.paymentIntentId);
-    const chargeId = paymentIntent.latest_charge as string | null;
+    const paymentIntent = await stripe.paymentIntents.retrieve(body.paymentIntentId, {
+      expand: ['latest_charge'],
+    });
+
+    // Normalize latest_charge: can be string ID or expanded object
+    const latestCharge = paymentIntent.latest_charge;
+    const chargeId =
+      typeof latestCharge === 'string'
+        ? latestCharge
+        : (latestCharge as { id: string } | null)?.id ?? null;
 
     logger.log('stripe', 'Creating transfers...', {
       orderId: body.orderId,

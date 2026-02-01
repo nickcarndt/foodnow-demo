@@ -177,6 +177,11 @@ export function SuccessClient() {
                   <span className="font-medium text-gray-900">
                     {transferIds.restaurantTransferId}
                   </span>
+                  {fallback ? (
+                    <span className="text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
+                      SIMULATED
+                    </span>
+                  ) : null}
                   <CopyButton value={transferIds.restaurantTransferId} label="Copy" />
                 </div>
               </div>
@@ -186,6 +191,11 @@ export function SuccessClient() {
                   <span className="font-medium text-gray-900">
                     {transferIds.courierTransferId}
                   </span>
+                  {fallback ? (
+                    <span className="text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
+                      SIMULATED
+                    </span>
+                  ) : null}
                   <CopyButton value={transferIds.courierTransferId} label="Copy" />
                 </div>
               </div>
