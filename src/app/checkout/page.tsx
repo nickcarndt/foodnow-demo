@@ -166,26 +166,29 @@ export default function CheckoutPage() {
             <div className="rounded-lg border border-gray-200 p-4 space-y-3 text-sm text-gray-600">
               <p className="font-semibold text-gray-900">How funds split</p>
               <p className="text-xs text-gray-500">
-                Platform charge with separate transfers (demo).
+                Platform charge with separate transfers.
               </p>
               <div className="flex justify-between">
-                <span>Platform fee (15%)</span>
-                <span className="font-medium text-gray-900">
-                  {formatCurrency(breakdown.platformFee)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Restaurant</span>
+                <span>Restaurant receives</span>
                 <span className="font-medium text-gray-900">
                   {formatCurrency(breakdown.restaurantAmount)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Courier</span>
+                <span>Courier receives</span>
                 <span className="font-medium text-gray-900">
                   {formatCurrency(breakdown.courierAmount)}
                 </span>
               </div>
+              <div className="flex justify-between">
+                <span>Platform keeps</span>
+                <span className="font-medium text-gray-900">
+                  {formatCurrency(breakdown.platformFee)}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 pt-2 border-t border-gray-100">
+                Stripe processing fees apply at the platform level and are omitted here for clarity.
+              </p>
             </div>
           </Card>
 

@@ -44,6 +44,9 @@ export function MoneyFlow({
             <span className="font-medium text-gray-900">{formatCurrency(platformFee)}</span>
           </div>
         </div>
+        <p className="text-xs text-gray-400 pt-3 border-t border-gray-100">
+          Stripe processing fees apply at the platform level and are omitted here for clarity.
+        </p>
       </div>
     </Card>
   );

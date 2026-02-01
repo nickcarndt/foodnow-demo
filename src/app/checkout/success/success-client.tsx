@@ -112,21 +112,21 @@ export function SuccessClient() {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-500">Platform kept</span>
-              <span className="font-medium text-gray-900">
-                {formatCurrency(demoOrderBreakdown.platformFee)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500">Restaurant transfer</span>
+              <span className="text-gray-500">Restaurant receives</span>
               <span className="font-medium text-gray-900">
                 {formatCurrency(demoOrderBreakdown.restaurantAmount)}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-500">Courier transfer</span>
+              <span className="text-gray-500">Courier receives</span>
               <span className="font-medium text-gray-900">
                 {formatCurrency(demoOrderBreakdown.courierAmount)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-500">Platform keeps</span>
+              <span className="font-medium text-gray-900">
+                {formatCurrency(demoOrderBreakdown.platformFee)}
               </span>
             </div>
           </div>

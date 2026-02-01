@@ -83,16 +83,20 @@ export const headerNavItems: NavItem[] = [
   { label: 'Payouts', href: '/payouts' },
 ];
 
+// Simplified demo pricing for interview clarity
+// All amounts in cents - totals reconcile exactly to $30.00
 export const demoOrderItems: OrderItem[] = [
-  { id: 'item_pepperoni', name: "Mario's Pizza — Large Pepperoni", price: 2200 },
-  { id: 'item_delivery', name: 'Delivery Fee', price: 300 },
+  { id: 'item_pepperoni', name: "Mario's Pizza — Large Pepperoni", price: 2500 },
+  { id: 'item_delivery', name: 'Delivery Fee', price: 500 },
 ];
 
 export const demoOrderId = 'order_demo_001';
 
+// Fixed demo splits for maximum clarity:
+// Customer pays: $30.00 | Restaurant: $20.00 | Courier: $5.00 | Platform: $5.00
 export const demoOrderBreakdown: OrderBreakdown = {
-  total: 2500,
-  platformFee: 375,
-  restaurantAmount: 1875,
-  courierAmount: 250,
+  total: 3000,           // $30.00 - Customer pays
+  restaurantAmount: 2000, // $20.00 - Restaurant receives
+  courierAmount: 500,     // $5.00  - Courier receives
+  platformFee: 500,       // $5.00  - Platform keeps
 };
