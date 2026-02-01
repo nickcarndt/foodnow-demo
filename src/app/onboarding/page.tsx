@@ -100,8 +100,12 @@ export default function OnboardingPage() {
             Stripe: Connect Express • Objects: Account, AccountLink
           </p>
           {!isPublicUrl ? (
-            <div className="mt-3 text-sm text-yellow-700 bg-yellow-50 px-3 py-2 rounded">
-              Hosted onboarding requires a public HTTPS URL. Use demo accounts for the interview.
+            <div className="mt-3 text-sm text-gray-700 bg-blue-50 border border-blue-200 px-4 py-3 rounded-lg">
+              <p className="font-medium">💡 Interview mode</p>
+              <p className="mt-1">
+                For reliable demos, I use pre-created test accounts to avoid onboarding delays.
+                Live Express onboarding works on the deployed Vercel URL.
+              </p>
             </div>
           ) : null}
           <p className="text-xs text-gray-500 mt-2">

@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "FoodNow Dashboard",
   description: "Stripe Connect demo for a food delivery platform.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

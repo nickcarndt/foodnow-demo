@@ -21,17 +21,23 @@ interface LogPanelProps {
 export function LogPanel({ isOpen, onToggle }: LogPanelProps) {
   const [logs, setLogs] = useState<DemoLogEntry[]>([]);
   const [logCount, setLogCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
-  const fetchLogs = useCallback(async () => {
+  const fetchLogs = useCallback(async (showLoading = false) => {
+    if (showLoading) setIsLoading(true);
     try {
       const response = await fetch('/api/logs', { cache: 'no-store' });
       const data = (await response.json()) as { success: boolean; data: DemoLogEntry[] };
       if (data.success) {
         setLogs(data.data);
         setLogCount(data.data.length);
+        setHasFetched(true);
       }
     } catch {
       // Ignore polling errors in demo mode
+    } finally {
+      if (showLoading) setIsLoading(false);
     }
   }, []);
 
@@ -55,10 +61,11 @@ export function LogPanel({ isOpen, onToggle }: LogPanelProps) {
 
   useEffect(() => {
     if (!isOpen) return;
-    fetchLogs();
-    const interval = setInterval(fetchLogs, 1500);
+    // Show loading on initial open, then poll silently
+    fetchLogs(!hasFetched);
+    const interval = setInterval(() => fetchLogs(false), 1500);
     return () => clearInterval(interval);
-  }, [fetchLogs, isOpen]);
+  }, [fetchLogs, isOpen, hasFetched]);
 
   const handleClear = async () => {
     try {
@@ -97,7 +104,9 @@ export function LogPanel({ isOpen, onToggle }: LogPanelProps) {
             </button>
           </div>
           <div className="p-4 space-y-3">
-            {logs.length === 0 ? (
+            {isLoading ? (
+              <p className="text-sm text-gray-500">Loading logs...</p>
+            ) : logs.length === 0 ? (
               <p className="text-sm text-gray-500">No logs yet.</p>
             ) : null}
             {logs

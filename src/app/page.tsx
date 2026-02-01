@@ -5,7 +5,6 @@ import { DemoIndicator } from '@/components/Layout/DemoIndicator';
 import { Header } from '@/components/Layout/Header';
 import { RecentActivity } from '@/components/Dashboard/RecentActivity';
 import { StatsCard } from '@/components/Dashboard/StatsCard';
-import { RunDemoButton } from '@/components/Demo/RunDemoButton';
 import { Card } from '@/components/ui/Card';
 import { dashboardHighlights, dashboardStats, featureCards } from '@/lib/demo-data';
 
@@ -21,8 +20,16 @@ export default function DashboardPage() {
           <p className="text-base text-gray-600 mt-2">
             Track demo performance and jump into each Stripe Connect workflow.
           </p>
-          <div className="mt-4">
-            <RunDemoButton />
+          <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+            <p className="text-sm font-semibold text-gray-900 mb-2">Suggested demo path (5-7 min)</p>
+            <ol className="text-sm text-gray-600 list-decimal list-inside space-y-1">
+              <li>Dashboard — explain platform model</li>
+              <li>Onboarding — show Express account creation</li>
+              <li>Checkout — process real test payment</li>
+              <li>Success — show money flow + transfer IDs</li>
+              <li>Fraud — run Radar simulation</li>
+              <li>Payouts — show instant payout UX</li>
+            </ol>
           </div>
         </section>
 

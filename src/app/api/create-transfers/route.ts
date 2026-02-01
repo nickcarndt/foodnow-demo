@@ -5,13 +5,16 @@ import { addLog } from '@/lib/log-store';
 import { stripe } from '@/lib/stripe';
 import type { CreateTransfersRequest, CreateTransfersResponse } from '@/types';
 
-const fallbackResponse: CreateTransfersResponse = {
+const generateSimulatedId = (type: string) =>
+  `tr_simulated_${type}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+
+const createFallbackResponse = (): CreateTransfersResponse => ({
   success: true,
   fallback: true,
-  restaurantTransferId: 'tr_demo_restaurant_001',
-  courierTransferId: 'tr_demo_courier_001',
-  message: 'Transfers simulated: connected accounts not payout-enabled in test.',
-};
+  restaurantTransferId: generateSimulatedId('rest'),
+  courierTransferId: generateSimulatedId('cour'),
+  message: 'Transfers simulated for demo clarity.',
+});
 
 export async function POST(request: Request) {
   try {
@@ -29,9 +32,19 @@ export async function POST(request: Request) {
       );
     }
 
+    logger.log('stripe', 'Retrieving PaymentIntent for source_transaction...', {
+      paymentIntentId: body.paymentIntentId,
+    });
+
+    // Retrieve the PaymentIntent to get the charge ID for source_transaction
+    // This links transfers to the specific charge that funded them (best practice)
+    const paymentIntent = await stripe.paymentIntents.retrieve(body.paymentIntentId);
+    const chargeId = paymentIntent.latest_charge as string | null;
+
     logger.log('stripe', 'Creating transfers...', {
       orderId: body.orderId,
       paymentIntentId: body.paymentIntentId,
+      chargeId,
     });
     addLog({
       level: 'stripe',
@@ -39,6 +52,7 @@ export async function POST(request: Request) {
       data: {
         orderId: body.orderId,
         paymentIntentId: body.paymentIntentId,
+        chargeId,
         restaurantAmount: body.restaurantAmount,
         courierAmount: body.courierAmount,
       },
@@ -49,6 +63,7 @@ export async function POST(request: Request) {
       currency: 'usd',
       destination: body.restaurantAccountId,
       transfer_group: body.orderId,
+      ...(chargeId && { source_transaction: chargeId }),
       metadata: {
         order_id: body.orderId,
         payment_intent_id: body.paymentIntentId,
@@ -61,6 +76,7 @@ export async function POST(request: Request) {
       currency: 'usd',
       destination: body.courierAccountId,
       transfer_group: body.orderId,
+      ...(chargeId && { source_transaction: chargeId }),
       metadata: {
         order_id: body.orderId,
         payment_intent_id: body.paymentIntentId,
@@ -96,6 +112,6 @@ export async function POST(request: Request) {
       },
     });
     console.error('Stripe API error:', error);
-    return NextResponse.json(fallbackResponse);
+    return NextResponse.json(createFallbackResponse());
   }
 }

@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MoneyFlow } from '@/components/Demo/MoneyFlow';
+import { ArchitectureDrawer } from '@/components/Demo/ArchitectureDrawer';
+import { RefundExplainer } from '@/components/Demo/RefundExplainer';
 import { demoOrderBreakdown, demoOrderId } from '@/lib/demo-data';
 import { getStoredAccounts } from '@/lib/demo-accounts-client';
 import { CopyButton } from '@/components/ui/CopyButton';
@@ -99,6 +101,14 @@ export function SuccessClient() {
               <div className="flex items-center gap-2">
                 <span className="font-medium text-gray-900">{paymentIntentId}</span>
                 <CopyButton value={paymentIntentId} label="Copy" />
+                <a
+                  href={`https://dashboard.stripe.com/test/payments/${paymentIntentId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-600 hover:text-orange-700 underline text-xs"
+                >
+                  View in Stripe →
+                </a>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -181,6 +191,11 @@ export function SuccessClient() {
               </div>
             </div>
           ) : null}
+
+          <div className="space-y-3 pt-2">
+            <ArchitectureDrawer />
+            <RefundExplainer />
+          </div>
         </Card>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">

@@ -15,9 +15,12 @@ const fallbackResponse: CreatePaymentResponse = {
   message: 'Demo fallback activated',
 };
 
+// Minimum order to ensure positive splits for all parties
+const MIN_ORDER_AMOUNT = 500; // $5.00
+
 const calculateBreakdown = (amount: number): OrderBreakdown => {
   const platformFee = Math.round(amount * 0.15);
-  const courierAmount = 250;
+  const courierAmount = 250; // Fixed $2.50 delivery fee
   const restaurantAmount = amount - platformFee - courierAmount;
 
   return {
@@ -35,6 +38,13 @@ export async function POST(request: Request) {
     if (!body?.amount || body.amount <= 0) {
       return NextResponse.json(
         { success: false, message: 'Invalid request payload' },
+        { status: 400 },
+      );
+    }
+
+    if (body.amount < MIN_ORDER_AMOUNT) {
+      return NextResponse.json(
+        { success: false, message: `Minimum order is $${(MIN_ORDER_AMOUNT / 100).toFixed(2)}` },
         { status: 400 },
       );
     }
