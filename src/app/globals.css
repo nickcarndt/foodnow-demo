@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #fafafa;
+  --color-foreground: #1a202c;
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: #fafafa;
+  color: #1a202c;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+iframe[title="Stripe developer tools frame"],
+button[title="Open Stripe Developer Tools"] {
+  display: none !important;
+}
+
+button[aria-label="Open Next.js Dev Tools"],
+button[title="Open Next.js Dev Tools"] {
+  display: none !important;
+}
+
+nextjs-portal,
+nextjs-portal * {
+  display: none !important;
+}
