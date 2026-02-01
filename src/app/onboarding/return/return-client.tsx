@@ -18,6 +18,29 @@ export function ReturnClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [fallback, setFallback] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isOpeningDashboard, setIsOpeningDashboard] = useState(false);
+
+  const handleOpenExpressDashboard = async () => {
+    if (!accountId) return;
+    setIsOpeningDashboard(true);
+    try {
+      const response = await fetch('/api/create-express-login-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accountId }),
+      });
+      const data = (await response.json()) as { success: boolean; url?: string; message?: string };
+      if (data.success && data.url) {
+        window.location.href = data.url;
+      } else {
+        setError(data.message || 'Unable to open Express Dashboard');
+        setIsOpeningDashboard(false);
+      }
+    } catch {
+      setError('Unable to open Express Dashboard');
+      setIsOpeningDashboard(false);
+    }
+  };
 
   useEffect(() => {
     if (!accountId) {
@@ -133,15 +156,26 @@ export function ReturnClient() {
             <Button variant="secondary">Back to Dashboard</Button>
           </a>
           {accountId ? (
-            <a
-              href={`https://dashboard.stripe.com/test/connect/accounts/${accountId}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button>View in Stripe →</Button>
-            </a>
+            <>
+              <a
+                href={`https://dashboard.stripe.com/test/connect/accounts/${accountId}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="secondary">View in Stripe (platform admin) →</Button>
+              </a>
+              <Button onClick={handleOpenExpressDashboard} loading={isOpeningDashboard}>
+                Open Express Dashboard (restaurant) →
+              </Button>
+            </>
           ) : null}
         </div>
+
+        {accountId ? (
+          <p className="text-xs text-gray-500 text-center mt-4">
+            Platform admin links require Stripe dashboard login. Express Dashboard opens the connected account's portal.
+          </p>
+        ) : null}
       </main>
     </div>
   );
