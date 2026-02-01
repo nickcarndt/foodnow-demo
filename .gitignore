@@ -38,6 +38,9 @@ cursorrules*.md
 FOODNOW_DEMO_SPEC*.md
 PLAN*.md
 
+# local assets
+screenshots/
+
 # vercel
 .vercel
 
