@@ -142,7 +142,7 @@ export default function CheckoutPage() {
             Process a customer payment. The platform then distributes funds to each party.
           </p>
           <p className="text-xs text-gray-500 mt-1">
-            Stripe: Payments + Connect • Objects: PaymentIntent, Transfers
+            Stripe: Payments + Connect • Objects: PaymentIntent → Transfers (after success)
           </p>
         </div>
 
