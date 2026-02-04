@@ -49,6 +49,18 @@ export async function POST(request: Request) {
         ? latestCharge
         : (latestCharge as { id: string } | null)?.id ?? null;
 
+    // Log the payment confirmation - this shows the payment succeeded
+    addLog({
+      level: 'success',
+      message: 'Payment confirmed',
+      data: {
+        paymentIntentId: paymentIntent.id,
+        status: paymentIntent.status,
+        amount: paymentIntent.amount,
+        chargeId: chargeId || 'N/A',
+      },
+    });
+
     logger.log('stripe', 'Creating transfers...', {
       orderId: body.orderId,
       paymentIntentId: body.paymentIntentId,

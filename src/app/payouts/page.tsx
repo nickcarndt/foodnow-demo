@@ -68,7 +68,7 @@ export default function PayoutsPage() {
                 💸 Cash Out Now
               </Button>
               <div className="text-sm text-gray-500">
-                Instant · 1% fee · ~30 min
+                Instant · 1.5% (US) fee · ~30 min
               </div>
               <div className="text-sm text-gray-500">
                 or standard payout (free; timing varies)
